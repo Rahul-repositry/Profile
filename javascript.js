@@ -1,3 +1,5 @@
+//
+
 const spanElOfImg = document.querySelectorAll(".img span");
 const textEl = document.querySelectorAll(".text")[0];
 const text = textEl.innerText.split(" ");
@@ -33,10 +35,10 @@ window.addEventListener("scroll", function () {
   var div = document.querySelector(".flex"); // Replace 'your-div-id' with the actual ID of your div
   var rect = div.getBoundingClientRect();
   var distance = rect.top;
-  console.log(distance);
+  // console.log(distance);
   if (distance < -300) {
     // Perform your action here
-    console.log("The gap is less than 200px!");
+    // console.log("The gap is less than 200px!");
     setAnimationDelay(textEl.children, animationDelay);
   }
 });
@@ -79,7 +81,7 @@ function removeActiveClassFromDivs(divs) {
 }
 
 function removeActiveClassFromSpans(spans) {
-  console.log(spans);
+  // console.log(spans);
   spans.forEach((span) => {
     span.classList.remove("active");
   });

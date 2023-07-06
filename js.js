@@ -94,7 +94,10 @@ function removeActiveClassFromSpans(spans) {
 
 // FUNCTIONS FOR SIDE SMOOTH SCROLLING OF IMAGES
 
-let handleOnDown = (e) => (track.dataset.mouseDownAt = e.clientX);
+let handleOnDown = (e) => {
+  track.dataset.mouseDownAt = e.clientX;
+  console.log(e.clientX);
+};
 
 let handleOnUp = () => {
   track.dataset.mouseDownAt = "0";
@@ -107,6 +110,8 @@ let handleOnMove = (e) => {
 
   let mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
     maxDelta = window.innerWidth / 2;
+
+  console.log(e.clientX);
 
   let percentage = (mouseDelta / maxDelta) * -100,
     nextPercentageUnletrained =
@@ -141,12 +146,12 @@ function startAnimation() {
   headingDiv.forEach((el) => {
     let parentDivDistance = el.parentElement.getBoundingClientRect().top;
     let headingDistanceFromTop = el.getBoundingClientRect().top;
-    console.log(el.parentElement.className);
+    // console.log(el.parentElement.className);
     if (el.parentElement.className != `section1 section`) {
       if (parentDivDistance > 0 && parentDivDistance < 100) {
         el.querySelector("h2.text").style.opacity = 1;
         el.classList.add("startAnimation");
-        console.log(el);
+        // console.log(el);
       }
     }
   });
@@ -210,14 +215,21 @@ function checkWindowSize() {
   }
 }
 
-//EVENTS FOR SIDE SMOOTH SCROLLING OF IMAGES
+//EVENTS FOR SIDE and SMOOTH SCROLLING OF IMAGES
 
-section3.addEventListener("mousedown", handleOnDown);
-section3.addEventListener("touchstart", handleOnDown);
-section3.addEventListener("mouseup", handleOnUp);
-section3.addEventListener("touchend", handleOnUp);
-section3.addEventListener("mousemove", handleOnMove);
-section3.addEventListener("touchmove", handleOnMove);
+/* -- Had to add extra lines for touch events -- */
+
+window.onmousedown = (e) => handleOnDown(e);
+
+window.ontouchstart = (e) => handleOnDown(e.touches[0]);
+
+window.onmouseup = (e) => handleOnUp(e);
+
+window.ontouchend = (e) => handleOnUp(e.touches[0]);
+
+window.onmousemove = (e) => handleOnMove(e);
+
+window.ontouchmove = (e) => handleOnMove(e.touches[0]);
 
 // Attach scroll event listener to trigger the calculation
 scrollElement.addEventListener("scroll", calculateDistancePercentage);
